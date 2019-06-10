@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,6 +58,13 @@ public class Utils {
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
             mActivitys.add(activity);
+
+            for (ActivityChangeListner listner :
+                    activityChangeListners) {
+                if (listner != null) {
+                    listner.onAdd(activity);
+                }
+            }
         }
 
         @Override
@@ -93,6 +101,12 @@ public class Utils {
         @Override
         public void onActivityDestroyed(Activity activity) {
             mActivitys.remove(activity);
+            for (ActivityChangeListner listner :
+                    activityChangeListners) {
+                if (listner != null) {
+                    listner.onDestroyed(activity);
+                }
+            }
         }
 
         void postAppStatus(boolean isForeground) {
@@ -143,8 +157,30 @@ public class Utils {
         if (list == null) {
             return null;
         }
-        Activity activity = list.get(list.size()-1);
+        Activity activity = list.get(list.size() - 1);
         return activity;
+    }
+
+    private static List<ActivityChangeListner> activityChangeListners = new ArrayList<>();
+
+    public static void addActivityChangeListner(ActivityChangeListner listner) {
+        if (activityChangeListners.contains(listner)) {
+            return;
+        }
+        activityChangeListners.add(listner);
+    }
+
+    public static void removeActivityChangeListner(ActivityChangeListner listner) {
+        if (activityChangeListners.contains(listner)) {
+            activityChangeListners.remove(listner);
+        }
+
+    }
+
+    public interface ActivityChangeListner {
+        void onAdd(Activity started);
+
+        void onDestroyed(Activity removed);
     }
 
     /***
