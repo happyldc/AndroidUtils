@@ -130,7 +130,7 @@ public class Utils {
      *
      * @return
      */
-    public List<Activity> getActivityList() {
+    public static List<Activity> getActivityList() {
         return getActivityLifecycleCallbacksImpl().mActivitys;
     }
 
@@ -138,7 +138,7 @@ public class Utils {
      * 获取顶部Activity
      * @return
      */
-    public Activity getTopActivity() {
+    public static Activity getTopActivity() {
         List<Activity> list = getActivityLifecycleCallbacksImpl().mActivitys;
         if (list == null) {
             return null;
