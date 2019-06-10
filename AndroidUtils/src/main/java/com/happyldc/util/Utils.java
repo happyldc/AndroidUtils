@@ -62,7 +62,7 @@ public class Utils {
             for (ActivityChangeListner listner :
                     activityChangeListners) {
                 if (listner != null) {
-                    listner.onAdd(activity);
+                    listner.onCreated(activity);
                 }
             }
         }
@@ -178,7 +178,7 @@ public class Utils {
     }
 
     public interface ActivityChangeListner {
-        void onAdd(Activity started);
+        void onCreated(Activity started);
 
         void onDestroyed(Activity removed);
     }
