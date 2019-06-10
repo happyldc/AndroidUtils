@@ -45,7 +45,7 @@ public class Utils {
     }
 
     public static Application getApp() {
-      return   sApplication;
+        return sApplication;
     }
 
     public static class ActivityLifecycleCallbacksImpl implements Application.ActivityLifecycleCallbacks {
@@ -123,6 +123,28 @@ public class Utils {
             }
 
         }
+    }
+
+    /**
+     * 获取已启动的Activity列表
+     *
+     * @return
+     */
+    public List<Activity> getActivityList() {
+        return getActivityLifecycleCallbacksImpl().mActivitys;
+    }
+
+    /***
+     * 获取顶部Activity
+     * @return
+     */
+    public Activity getTopActivity() {
+        List<Activity> list = getActivityLifecycleCallbacksImpl().mActivitys;
+        if (list == null) {
+            return null;
+        }
+        Activity activity = list.get(list.size()-1);
+        return activity;
     }
 
     /***
